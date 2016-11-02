@@ -12,21 +12,15 @@ object DongwonSolution {
     var possibleValue = useNumbers.filter(numberCountMap(_) >= 4).reverse.takeWhile(v => v*v >= x).length
     var possibleIndex = -1
     for (i <- 1 until useNumbers.length){
-      var startIndex = 0
-      if(possibleIndex == -1){
-        startIndex = i
-      }else{
-        startIndex = possibleIndex
-      }
-
-      val count = (startIndex-1 to 0 by -1).takeWhile(useNumbers(_) * useNumbers(i) >= x).length
+      val startIndex = if(possibleIndex == -1) i else possibleIndex
+      val count = (startIndex - 1 to 0 by -1).takeWhile(useNumbers(_) * useNumbers(i) >= x).length
       if(count > 0){
         possibleIndex = startIndex - count
       }
       if(possibleIndex != -1){
         possibleValue = possibleValue + i - possibleIndex
         if(possibleValue >= 1000000000){
-          -1
+          return -1
         }
       }
     }
